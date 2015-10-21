@@ -1,0 +1,50 @@
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>无标题文档</title>
+</head>
+
+<body>
+<script>
+var position_option = {
+	enableHighAccuracy: true,
+	maximumAge: 30000,
+	timeout: 10000
+};
+function getLocation(){
+	if (navigator.geolocation){
+		navigator.geolocation.getCurrentPosition(getPositionSuccess, getPositionError, position_option);
+	}else{
+		alert('您的浏览器不支持geolocation');
+	}
+}
+function getPositionSuccess( position ){
+        var lat = position.coords.latitude;
+        var lng = position.coords.longitude;
+        alert( "您所在的位置： 纬度" + lat + "，经度" + lng );
+		if(typeof position.address !== "undefined"){
+                var country = position.address.country;
+                var province = position.address.region;
+                var city = position.address.city;
+                alert(' 您位于 ' + country + province + '省' + city +'市');
+        }
+}
+function getPositionError(error) {
+    switch (error.code) {
+        case error.TIMEOUT:
+            alert("连接超时，请重试");
+            break;
+        case error.PERMISSION_DENIED:
+            alert("您拒绝了使用位置共享服务，查询已取消");
+            break;
+        case error.POSITION_UNAVAILABLE:
+            alert("获取位置信息失败");
+            break;
+    }
+}
+getLocation();
+
+</script>
+<a href="http://www.xbiao.com/brandApp/shoplist/brand_id/27/city_name/%E5%8C%97%E4%BA%AC" target="_blank">商铺</a>
+</body>
+</html>
