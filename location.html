@@ -1,0 +1,40 @@
+<html>
+<head></head>
+<body>
+<script type="text/javascript" src="http://www.xbiao.com/js/jquery.js"></script>
+<script type="text/javascript" src="http://api.map.baidu.com/api?v=2.0&ak=A4749739227af1618f7b0d1b588c0e85"></script>
+<script>
+var city_name = null;  //城市名
+var lng = lat = '';		//坐标点
+/*获取LBS地理位置*/
+var position_option = {
+	enableHighAccuracy: true,
+	maximumAge: 30000,
+	timeout: 1000
+};
+function getLocation(){
+	if (navigator.geolocation){
+		navigator.geolocation.getCurrentPosition(translateCallback, getPositionError, position_option);
+	}else{
+		alert('您的浏览器不支持geolocation');
+	}
+}
+function getPositionError(error) {
+	alert('获取坐标失败');
+}
+//获取坐标后请求
+function translateCallback(position){
+	if(position){
+		lng = position.coords.longitude; // 纬度
+		lat = position.coords.latitude; //经度
+	};
+	$.getJSON('http://www.xbiao.com/zone/open2?lng='+lng+'&lat='+lat+'&callback=?', function(data){
+		alert('省:'+data.province)
+		alert('市:'+data.city)
+		alert('县:'+data.district)
+	});
+};
+getLocation();
+</script>
+</body>
+</html>
